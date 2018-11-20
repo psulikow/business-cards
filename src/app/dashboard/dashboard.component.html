@@ -1,0 +1,109 @@
+
+<app-header [isUserLoggedIn]="true" ></app-header>
+<app-alert></app-alert>
+<div class="row" style="margin-left: auto; margin-right: auto;">
+
+    <div style="float: left; padding: 10px;margin-left: auto; margin-right: auto; text-align: center; width: 200px;">
+      <div class="card" style="width: 21rem; margin:0 auto;" >
+        <div class="card-block" align="center">
+        <h4>Add a contact</h4>
+        <img class="card-img-top"
+             style="padding: 15px;margin:0 auto;width:80%;height:180px;"
+             src="https://drewrobey.com/wp-content/uploads/2018/03/alberteinsteinbusinesscard.png"
+             alt="Preserve your moments" />
+        <div class="card-block" align="center">
+          <div class="container" align="center">
+            <a class="btn btn-primary" (click)="loadMyChildComponent();">Open Camera</a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+
+  <div *ngIf="loadComponent" style="float: left; padding: 10px;margin-left: auto; margin-right: auto; text-align: center; width: 200px;">
+      <app-web-cam></app-web-cam>
+    </div>
+
+    <div style="float: left; padding: 10px;margin-left: auto; margin-right: auto; text-align: center; width: 200px;">
+      <div class="card" style="width: 21rem; margin:0 auto;" >
+        <div class="card-block" align="center">
+          <h4>Search for a contact by last name <b>OR</b> email.</h4>
+          <form [formGroup]="searchForm" (ngSubmit)="getCardFromSearch()">
+            <div class="form-group">
+              <label for="fullName">Last Name</label>
+              <input type="text" formControlName="fullName" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="text" formControlName="email" class="form-control" />
+            </div>
+            <div class="form-group">
+              <button [disabled]="loading" class="btn btn-primary">Search</button>
+            </div>
+          </form>
+          <button (click)="ngOnInit()" class="btn btn-primary">Reset Search</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<br>
+
+<div *ngIf="searchResult" class="table-responsive">
+<h4 style="text-align:center;">
+  Search Results:
+</h4>
+<table class="table">
+  <thead>
+  <tr>
+    <th>Contact #</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Image</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let businessCard of businessCardSearchResults; let i = index">
+    <td>{{ i + 1 }}.</td>
+    <td> {{ businessCard.firstName }}</td>
+    <td> {{ businessCard.lastName }}</td>
+    <td> {{ businessCard.phoneNumber }}</td>
+    <td> {{ businessCard.email }}</td>
+    <td><img src="{{'data:image/jpg;base64,' + businessCard.imageUri}}" height="150" width="225"/></td>
+  </tr>
+  </tbody>
+</table>
+</div>
+
+<br>
+
+<div *ngIf="businessCards && businessCards.length > 0 && !searchResult" class="table-responsive">
+  <h4 style="text-align:center;">
+    Current Contacts:
+  </h4>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Contact #</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Image</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let businessCard of businessCards; let i = index">
+      <td>{{ i + 1 }}.</td>
+      <td> {{ businessCard.firstName }}</td>
+      <td> {{ businessCard.lastName }}</td>
+      <td> {{ businessCard.phoneNumber }}</td>
+      <td> {{ businessCard.email }}</td>
+      <td><img src="{{'data:image/jpg;base64,' + businessCard.imageUri}}" height="150" width="225"/></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+

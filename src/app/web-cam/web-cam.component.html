@@ -1,0 +1,39 @@
+<!--<app-header [isUserLoggedIn]="true" ></app-header>-->
+<div class="card" style="width: 21rem; margin:0 auto;" >
+
+<div style="text-align:center">
+  <h4>
+    Take a picture of the business card you would like to add.
+  </h4>
+
+  <div>
+    <webcam [height]="350" [width]="250" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" *ngIf="showWebcam"
+            [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable"
+            [videoOptions]="videoOptions"
+            (cameraSwitched)="cameraWasSwitched($event)"
+            (initError)="handleInitError($event)"></webcam>
+    <br/>
+    <button class="btn btn-primary" (click)="triggerSnapshot()">Take A Snapshot</button>
+    <!--DeviceId: <input id="deviceId" type="text" [(ngModel)]="deviceId" style="width: 500px">-->
+    <!--<button (click)="showNextWebcam(deviceId);">Activate</button>-->
+  </div>
+</div>
+
+<div *ngIf="webcamImage" style="text-align:center">
+  <h3>Your Card</h3>
+  <div >
+    <img [src]="webcamImage.imageAsDataUrl" height="180" width="250"/>
+  </div>
+  <button class="btn btn-primary" (click)="callTextDetect();clearImage()">Accept and process image</button>
+  <button class="btn btn-primary" (click)="clearImage()">Redo</button>
+</div>
+<br>
+
+<div style="text-align:center">
+  <h4 *ngIf="errors.length > 0">Messages:</h4>
+  <ul *ngFor="let error of errors">
+    <li>{{error | json}}</li>
+  </ul>
+</div>
+
+</div>

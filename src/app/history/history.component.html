@@ -1,0 +1,14 @@
+<app-header [isUserLoggedIn]="true" ></app-header><h4>Search History</h4>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>Result:</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let searchItem of searchHistory">
+    <td> {{searchItem}} </td>
+  </tr>
+  </tbody>
+</table>
